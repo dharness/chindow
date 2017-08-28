@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+  font-family: Avenir Next, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  color: var(--blue-1);
+  -webkit-font-smoothing: antialiased;
+}
