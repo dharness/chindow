@@ -4,7 +4,7 @@ import proPointsUrl from './../../assets/pro-points.svg'
 
 class PricingPlans extends Component {
   render () {
-    var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=${process.env.SLACK_SCOPES}&client_id=${process.env.SLACK_CLIENT_ID}`;
+    // var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=${process.env.SLACK_SCOPES}&client_id=${process.env.SLACK_CLIENT_ID}`;
     return (  
       <div className="sc-landing-pricing--plans">
         <div className="sc-landing-pricing--plan">
@@ -29,7 +29,7 @@ class PricingPlans extends Component {
           <div className="sc-landing-pricing--plan-price">
             $7/month
           </div>
-          <img src={proPointsUrl} alt="" className="sc-landing-pricing--plan-points" />
+          <img src={proPointsUrl} alt="" className="sc-landing-pricing--plan-points"/>
           <div className="sc-landing-pricing--plan-button-wrapper">
             <a className="sc-landing-pricing--plan-button" id="customButton">Get Slackchat Pro</a>
           </div>

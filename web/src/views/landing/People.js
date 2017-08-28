@@ -12,7 +12,7 @@ class People extends Component {
         </div>
         <div className="sc-landing-people--quotes">
           <div className="sc-landing-people--quote">
-            <img className="sc-landing-people--quote-img" src={morganUrl} />
+            <img className="sc-landing-people--quote-img" src={morganUrl} alt=""/>
             <div className="sc-landing-people--quote-text">
               <i>
                 "I added Slackchat to my shoppify site in under 5 minutes. Wonderful!"
@@ -20,7 +20,7 @@ class People extends Component {
             </div>
           </div>
           <div className="sc-landing-people--quote">
-            <img className="sc-landing-people--quote-img" src={vickyUrl} />
+            <img className="sc-landing-people--quote-img" src={vickyUrl} alt=""/>
             <div className="sc-landing-people--quote-text">
               <i>
               "Great for women, or for men. For white people, or asians! Works for everyone"
@@ -28,7 +28,7 @@ class People extends Component {
             </div>
           </div>
           <div className="sc-landing-people--quote">
-            <img className="sc-landing-people--quote-img" src={leviUrl} />
+            <img className="sc-landing-people--quote-img" src={leviUrl} alt=""/>
             <div className="sc-landing-people--quote-text">
               <i>
                 "As an experienced architect I can say - Slackchat is very well made."

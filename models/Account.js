@@ -33,11 +33,11 @@ const accountSchema = new Schema({
   },
   paymentInfo: {
     stripeCustomerId: String,
-  }
+  },
 },
-{
-  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-});
+  {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+  });
 
 accountSchema.statics.createOrUpdate = function createOrUpdate(accountInfo) {
   const { email } = accountInfo.profile;

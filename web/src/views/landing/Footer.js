@@ -30,7 +30,7 @@ class Footer extends Component {
           <div className="sc-footer--contact">
             <div className="sc-footer--contact-title"> Contact </div>
             <div className="sc-footer--contact-buttons">
-              <a className="sc-footer--contact-button" href="https://www.facebook.com/kingofthestack/" target="_blank">
+              <a className="sc-footer--contact-button" href="https://www.facebook.com/kingofthestack/" rel="noopener noreferrer" target="_blank">
                 <img className="facebook-icon" src={facebookUrl} alt="" />
               </a>
               <a className="sc-footer--contact-button" href="mailto:hello@kingofthestack.com">

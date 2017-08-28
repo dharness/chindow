@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker';
 import Landing from './views/landing/Landing'
+import Dashboard from './views/dashboard/Dashboard'
 import './styles'
 
 const App = () => (
   <Switch>
     <Route exact path='/' component={Landing} />
-    <Route path='/about' component={()=>{}} />
+    <Route path='/dashboard' component={Dashboard} />
     <Route path='/contact' component={()=>{}} />
   </Switch>
 )
