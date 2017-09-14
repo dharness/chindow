@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 
-function connect() {
+mongoose.Promise = global.Promise;
+
+const connect = async () => {
   mongoose.set('debug', process.env.NODE_ENV !== 'production');
   return mongoose.connect(process.env.MONGO_URL);
 }
