@@ -1,54 +1,52 @@
 require('dotenv').config();
-const crypto = require('crypto');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 9090;
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-const initMessaging = require('./messaging');
-const helpers = require('express-helpers');
+const bodyParser = require('body-parser')
+const { configureStrategies } = require('./config/passport');
 const connectDb = require('./services/connections').connect;
-const routes = require('./routes');
-const Account = require('./models/Account');
-const session = require('express-session');
-const redis = require('redis');
-const RedisStore = require('connect-redis')(session);
+const Strategy = require('passport-local').Strategy;
 const winston = require('winston');
+const Account = require('./models/Account');
+const expressJwt = require('express-jwt');
+const jwtSecret = require('./config/jwt').secretKey;
+const api = require('./api')
 
 
-app.use(session({
-  store: new RedisStore({
-    client: redis.createClient(),
-  }),
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true,
-  genid() {
-    return crypto.randomBytes(48).toString('base64');
-  },
-}));
-
-
-// set the view engine to ejs
-helpers(app);
-app.set('view engine', 'ejs');
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-app.use(express.static(`${__dirname}/public`));
-app.use(routes);
+app.use(bodyParser.json());
+const passport = configureStrategies();
+app.use(passport.initialize());
 
-connectDb().then(() => {
-  Account.find().distinct('bot.bot_access_token').exec().then((botTokens) => {
-    initMessaging(io, botTokens);
-    server.listen(PORT, () => {
-      winston.info(`App listening at http://127.0.0.1:${PORT}`);
-    });
-  });
-}, (err) => {
-  if (err) {
-    winston.error('Database not connected');
-  }
+
+app.use('/api', api);
+
+
+app.get('/secret', (req, res) => {
+  res.send('heyo')
 });
+
+app.get('/err', (req, res) => {
+  res.send('some error occurred')
+})
+
+app.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res) => {
+  res.send({ token: req.token })
+});
+
+app.post('/login', passport.authenticate('local-login', { session: false }), (req, res) => {
+  res.send({ token: req.token })
+});
+
+const start = async () => {
+  await connectDb();
+  app.listen(PORT, () => {
+    console.log(`Server listening at http://localhost:${PORT}`)
+  });
+}
+
+start();
