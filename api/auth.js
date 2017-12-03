@@ -9,4 +9,9 @@ router.post('/login', passport.authenticate('local-login', { session: false }), 
   res.send({ token: req.token, id, email })
 });
 
+router.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res) => {
+  const { id, email } = req.user;
+  res.send({ token: req.token, id, email })
+});
+
 module.exports = router;

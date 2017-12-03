@@ -26,7 +26,6 @@ router.get('/:team_id/dashboard/analytics', hasActiveSession, (req, res) => {
   const chartDataUrl = `${process.env.SLACKCHAT_API_URL}/visitors/${teamId}?${queryParams}`;
   Account.findOne({ team_id: teamId }).then((account) => {
     if (!account) { return res.sendStatus(404); }
-    console.log(account);
     return res.render('dashboard/analytics', Object.assign(account, { openTab, chartDataUrl, selectedPage }));
   });
 });

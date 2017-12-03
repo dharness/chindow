@@ -53,7 +53,6 @@ module.exports = {
             return winston.error('authentication failed');
           }
           const accountInfo = response.data;
-          console.log(JSON.stringify(accountInfo, '\t', 2));
           const token = response.data.access_token;
           // this.getTeamInfo(token);
 
@@ -66,7 +65,6 @@ module.exports = {
           return Promise.all([userProfileReq, teamInfoReq]).then((responses) => {
             responses.push(accountInfo);
             const merged = Object.assign(...responses);
-            console.log(merged);
             return this._extractAccountInfo(merged);
           });
         });
