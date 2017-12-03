@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timestamps = require('mongoose-timestamp');
 const bcrypt = require('bcrypt-nodejs');
 
 
@@ -40,6 +41,8 @@ accountSchema.method('toClient', function() {
 
   return obj;
 });
+
+accountSchema.plugin(timestamps);
 
 const Account = mongoose.model('Account', accountSchema);
 module.exports = Account;

@@ -1,6 +1,6 @@
 const express = require('express');
 const moment = require('moment');
-const Visitor = require('./../../models/Visitor');
+const Visitor = require('./../models/Visitor');
 
 
 const router = express.Router();
