@@ -9,6 +9,7 @@ router.get('/:accountId', (req, res) => {
 
   Account.findOne({ _id: accountId }, (err, account) => {
     if (err) { return res.send(500); }
+    console.log(account)
     return res.send(account.toClient());
   });
 });
