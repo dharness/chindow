@@ -9,7 +9,7 @@ router.get('/:accountId', (req, res) => {
 
   Account.findOne({ _id: accountId }, (err, account) => {
     if (err) { return res.send(500); }
-    console.log(account)
+    if (!account) { return res.send(404); }
     return res.send(account.toClient());
   });
 });

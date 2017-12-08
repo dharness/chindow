@@ -18,7 +18,10 @@ const accountSchema = new Schema({
       name: String,
       id: String
     },
-    imgUrl: String
+    imgUrl: String,
+    bot: {
+      botToken: String
+    }
   }
 }, {
   versionKey: false

@@ -18,9 +18,20 @@ module.exports = {
         name: accountInfo.incoming_webhook.channel,
         id: accountInfo.incoming_webhook.channel_id
       },
-      imgUrl: accountInfo.team.icon.image_230
+      imgUrl: accountInfo.team.icon.image_230,
+      bot: accountInfo.bot
     };
     return slackInfo;
+  },
+
+  _extractAccessToken(data) {
+    return data.access_token
+  },
+
+  _extractBotToken(data) {
+    if (data.bot) {
+      return data.bot.bot_access_token;
+    }
   },
 
   async getTeamInfo(accessToken) {
@@ -48,23 +59,26 @@ module.exports = {
           redirect_uri: process.env.SLACK_REDIRECT_URI,
           client_secret: '059f7bea0e6e4558e0b1e5886986382e',
         }))
-        .then((response) => {
+        .then(async (response) => {
           if (response.data.ok !== true) {
             return winston.error('authentication failed');
           }
           const accountInfo = response.data;
-          const token = response.data.access_token;
-          // this.getTeamInfo(token);
+          const accessToken = this._extractAccessToken(response.data);
+          const botToken = this._extractBotToken(response.data);
 
-          const userProfileReq = axios.post(`${SLACK_API_URL}/users.profile.get`, querystring.stringify({ token }))
+          const teamInfo = await this.getTeamInfo(accessToken);
+          const botInfo = { bot: { botToken } };
+
+          const userProfileReq = axios.post(`${SLACK_API_URL}/users.profile.get`, querystring.stringify({ accessToken }))
             .then(({ data }) => data);
 
-          const teamInfoReq = axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ token }))
+          const teamInfoReq = axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ accessToken }))
             .then(({ data }) => Object.assign(accountInfo, data));
 
           return Promise.all([userProfileReq, teamInfoReq]).then((responses) => {
             responses.push(accountInfo);
-            const merged = Object.assign(...responses);
+            const merged = Object.assign(...responses, botInfo, teamInfo);
             return this._extractAccountInfo(merged);
           });
         });

@@ -15,7 +15,7 @@ router.get('/authorize', (req, res) => {
       const id = clientState.slackchatUserId;
       Account.update({ _id: id }, { $set: { slack: slackInfo }}, (err, doc) => {
         if (err) { return res.send(500); }
-        res.redirect('http://localhost:3000/59a5990a8a63d7030ba5172e/dashboard/accounts')
+        res.redirect(`http://localhost:3000/${id}/dashboard/accounts`)
       });
     })
     .catch((err) => {
